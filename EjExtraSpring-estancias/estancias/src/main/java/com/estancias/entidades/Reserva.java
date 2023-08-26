@@ -10,7 +10,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Estancia {
+public class Reserva {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -31,7 +31,7 @@ public class Estancia {
     @OneToOne
     private Cliente cliente;
 
-    public Estancia() {
+    public Reserva() {
     }
 
     public String getId() {
