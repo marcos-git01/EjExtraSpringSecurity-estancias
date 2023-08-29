@@ -8,6 +8,7 @@ import com.estancias.repositorios.CasaRepositorio;
 import com.estancias.repositorios.ClienteRepositorio;
 import com.estancias.repositorios.ReservaRepositorio;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class ReservaServicio {
         Reserva reserva = new Reserva();
 
         reserva.setHuesped(huesped);
+        
+        reserva.setFechaDesde(new Date());
 
         reserva.setCasa(casa);
 
