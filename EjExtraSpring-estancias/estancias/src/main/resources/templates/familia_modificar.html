@@ -9,40 +9,32 @@
 
         <div class="container-fluid m-5 contenedor">
 
-            <form class="formulario" th:action="@{/cliente/modificar/__${cliente.id}__}" method="POST">
+            <form class="formulario" th:action="@{/familia/modificar/__${familia.id}__}" method="POST">
                 
                 <input hidden th:value= "${id}" name="id">
 
                 <div class="form-group my-3">
-                    <label class="mb-2">Modificar Cliente</label> 
+                    <label class="mb-2">Modificar Familia</label> 
 
-                    <input th:value="${cliente.nombre}" type="text" class="form-control" name="nombre" placeholder="Nombre">
+                    <input th:value="${familia.nombre}" type="text" class="form-control" name="nombre" placeholder="Nombre">
                 </div>
-
+                              
                 <div class="form-group my-3">                   
-                    <input th:value="${cliente.calle}" type="text" class="form-control" name="calle" placeholder="Calle">
+                    <input th:value="${familia.edadMin}" type="number" class="form-control" name="edadMin" placeholder="Edad minima">
                 </div>
                 
                 <div class="form-group my-3">                   
-                    <input th:value="${cliente.numero}" type="number" class="form-control" name="numero" placeholder="Numero">
+                    <input th:value="${familia.edadMax}" type="number" class="form-control" name="edadMax" placeholder="Edad maxima">
                 </div>
                 
                 <div class="form-group my-3">                   
-                    <input th:value="${cliente.codPostal}" type="text" class="form-control" name="codPostal" placeholder="Codigo Postal">
+                    <input th:value="${familia.numHijos}" type="number" class="form-control" name="numHijos" placeholder="N° de hijos">
                 </div>
                 
                 <div class="form-group my-3">                   
-                    <input th:value="${cliente.ciudad}" type="text" class="form-control" name="ciudad" placeholder="Ciudad">
+                    <input th:value="${familia.email}" type="text" class="form-control" name="email" placeholder="Email">
                 </div>
-                
-                <div class="form-group my-3">                   
-                    <input th:value="${cliente.pais}" type="text" class="form-control" name="pais" placeholder="Pais">
-                </div>
-                
-                <div class="form-group my-3">                   
-                    <input th:value="${cliente.email}" type="text" class="form-control" name="email" placeholder="Email">
-                </div>
-                             
+                                             
                 <div class="form-group my-3">
 
                     <select name="idUsuario">
@@ -52,6 +44,19 @@
                         <option th:each="usuario : ${usuarios}"
                                 th:value="${usuario.id}"
                                 th:text="${usuario.alias}"
+                                />
+                    </select>
+                </div>
+                
+                <div class="form-group my-3">
+
+                    <select name="idCasa">
+
+                        <option>Seleccionar Usuario</option>
+
+                        <option th:each="casa : ${casas}"
+                                th:value="${casa.id}"
+                                th:text="${casa.calle}"
                                 />
                     </select>
                 </div>
