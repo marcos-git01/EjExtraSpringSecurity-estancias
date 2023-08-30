@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace= "/fragments/head_form :: head" ></head>
+
+    <body>
+
+        <nav th:replace= "/fragments/navbar :: nav" ></nav>
+
+        <div class="container-fluid m-5 contenedor">
+
+            <form class="formulario" th:action="@{/cliente/modificar/__${cliente.id}__}" method="POST">
+                <input hidden th:value= "${id}" name="id">
+
+                <div class="form-group my-3">
+                    <label class="mb-2">Modificar Cliente</label> 
+
+                    <input th:value="${cliente.nombre}" type="text" class="form-control" name="nombre" placeholder="Nombre">
+                </div>
+
+                <div class="form-group my-3">                   
+                    <input th:value="${cliente.calle}" type="text" class="form-control" name="calle" placeholder="Calle">
+                </div>
+                
+                <div class="form-group my-3">                   
+                    <input th:value="${cliente.numero}" type="number" class="form-control" name="numero" placeholder="Numero">
+                </div>
+                
+                <div class="form-group my-3">                   
+                    <input th:value="${cliente.codPostal}" type="text" class="form-control" name="codPostal" placeholder="Codigo Postal">
+                </div>
+                
+                <div class="form-group my-3">                   
+                    <input th:value="${cliente.ciudad}" type="text" class="form-control" name="ciudad" placeholder="Ciudad">
+                </div>
+                
+                <div class="form-group my-3">                   
+                    <input th:value="${cliente.pais}" type="text" class="form-control" name="pais" placeholder="Pais">
+                </div>
+                
+                <div class="form-group my-3">                   
+                    <input th:value="${cliente.email}" type="text" class="form-control" name="email" placeholder="Email">
+                </div>
+                             
+                <div class="form-group my-3">
+
+                    <select name="idUsuario">
+
+                        <option>Seleccionar Usuario</option>
+
+                        <option th:each="usuario : ${usuarios}"
+                                th:value="${usuario.id}"
+                                th:text="${usuario.alias}"
+                                />
+                    </select>
+                </div>
+                               
+                <button type="submit" class="btn btn-primary mt-3 botones">Actualizar</button>
+            </form>
+
+            <div th:if="${exito}!=null" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                <div class="card-body">
+                    <h5 class="card-title">Exito 👍</h5>
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
+            </div>
+            <div th:if="${error}!=null" class="card text-white bg-danger mb-3 mensajeError" >
+                <div class="card-body">
+                    <h5 class="card-title">Error 👎</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
+            <section class=" text-center container">
+                <div class="row mt-3">
+                    <div class="divVolver">
+                        <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer th:replace= "/fragments/footer :: footer" ></footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    </body>
+</html>

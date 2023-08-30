@@ -25,14 +25,14 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Autores
+                    Familia
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/autor/registrar}">Crear Autor</a></li>
+                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/familia/registrar}">Crear Familia</a></li>
                     <li><hr class="dropdown-divider"></li>
 
-                    <li><a class="dropdown-item" th:href="@{/autor/lista}">Listar Autores</a></li>
+                    <li><a class="dropdown-item" th:href="@{/familia/lista}">Listar Familia</a></li>
                 </ul>
             </li>
 
@@ -46,6 +46,19 @@
                     <li><hr class="dropdown-divider"></li>
 
                     <li><a class="dropdown-item" th:href="@{/casa/lista}">Listar Casas</a></li>
+                </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Reserva
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/reserva/registrar}">Crear Reserva</a></li>
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" th:href="@{/reserva/lista}">Listar Reserva</a></li>
                 </ul>
             </li>
 
