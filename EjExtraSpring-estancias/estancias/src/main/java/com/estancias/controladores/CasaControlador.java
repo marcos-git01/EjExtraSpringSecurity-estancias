@@ -1,11 +1,14 @@
 package com.estancias.controladores;
 
+import com.estancias.entidades.Casa;
 import com.estancias.excepciones.MiException;
 import com.estancias.servicios.CasaServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,5 +51,66 @@ public class CasaControlador {
 
         return "casa_form.html";
     }
+    
+    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/lista") //localhost:8080/casa/lista
+    public String listar(ModelMap modelo) {
+
+        List<Casa> casas = casaServicio.listarCasas();
+
+        modelo.addAttribute("casas", casas);
+
+        return "casa_list.html";
+
+    }
+    
+    @GetMapping("/modificar/{id}") //localhost:8080/cliente/modificar/{id}
+    public String modificar(@PathVariable String id, ModelMap modelo) {
+
+        modelo.put("casa", casaServicio.getOne(id));
+       
+        return "casa_modificar.html";
+    }
+    
+    @PostMapping("/modificar/{id}")
+    public String modificar(@PathVariable String id, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda, ModelMap modelo) {
+
+        try {
+
+            casaServicio.actualizar(id, calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda);
+
+            //Ver esta linea si funciona?
+            modelo.put("exito", "La Casa fue modificada correctamente!");
+
+            return "redirect:../lista";
+
+        } catch (MiException ex) {
+
+            modelo.put("error", ex.getMessage());
+
+            return "casa_modificar.html";
+        }
+
+    }
+    
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable String id, ModelMap modelo) throws MiException {
+   
+        try {
+
+            casaServicio.eliminarCasa(id);
+
+            return "redirect:../lista";
+
+        } catch (MiException ex) {
+
+            modelo.put("error", ex.getMessage());
+
+            //return "noticia_eliminar.html";
+            return "redirect:../lista";
+        }
+
+    }
+    
 
 }
