@@ -1,7 +1,10 @@
 package com.estancias.entidades;
 
+import com.estancias.enumeraciones.Rol;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
@@ -25,6 +28,9 @@ public class Usuario {
 
     @Temporal(TemporalType.DATE)
     private Date fechaBaja;
+
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 
     public Usuario() {
     }
@@ -75,6 +81,14 @@ public class Usuario {
 
     public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
 }
