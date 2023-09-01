@@ -1,9 +1,12 @@
 
 package com.estancias.controladores;
 
+import com.estancias.entidades.Usuario;
 import com.estancias.excepciones.MiException;
 import com.estancias.servicios.UsuarioServicio;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,10 +58,26 @@ public class PortalControlador {
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
 
         if (error != null) {
-            modelo.put("error", "Usuario o Contraseña invalidos!");
+            modelo.put("error", "Usuario o Clave invalidos!");
         }
 
         return "login.html";
+    }
+    
+    //Para poder ingresar /inicio y al metodo interno String inicio, 
+    //necesito estar logueado como USER o ADMIN, mediante @PreAuthorize
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/inicio")
+    public String inicio(HttpSession session) { //Este metodo recibe un objeto del tipo HttpSession
+
+        //Este usuario logueado, contiene todos los datos de la session
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession"); //"usuariosession" es la llave, que contiene al usuario que abrio la sesion en el sistema
+
+        if (logueado.getRol().toString().equals("ADMIN")) {
+            return "redirect:/admin/dashboard";
+        }
+
+        return "inicio.html";
     }
     
     

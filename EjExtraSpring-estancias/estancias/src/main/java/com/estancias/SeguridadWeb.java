@@ -34,14 +34,14 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter{
 
         http
                 .authorizeRequests() //Va autorizar determinados parametros, .antMatchers siempre que estemos ingresando a determinadas partes
-                    //.antMatchers("/admin/*").hasRole("ADMIN") // para ingresar a /admin/*, lo que sea, solo se puede acceder si tenemos rol Admin
+                    .antMatchers("/admin/*").hasRole("ADMIN") // para ingresar a /admin/*, lo que sea, solo se puede acceder si tenemos rol Admin
                     .antMatchers("/css/*", "/js/*", "/img/*", "/**") // para ingresar a las partes establecidas del sistema permita todos los archivos cuyas rutas definamos
-                    .permitAll(); // Van a ser permitidos por cualquier persona que acceda al sistema
-                /*.and().formLogin() // Esto pertenece al formulario de login
+                    .permitAll() // Van a ser permitidos por cualquier persona que acceda al sistema
+                .and().formLogin() // Esto pertenece al formulario de login
                     .loginPage("/login") //Esta linea indica donde esta la pagina de login
                     .loginProcessingUrl("/logincheck") //Cual va a ser la url con la cual Spring Security va a autenticar un usuario, para procesar este inicio de sesion la url va a ser /logincheck
-                    .usernameParameter("email") //Configuramos las credenciales, como username el "email"
-                    .passwordParameter("password") //Configuramos las credeniciales, como password "password"
+                    .usernameParameter("alias") //Configuramos las credenciales, como username el "email"
+                    .passwordParameter("clave") //Configuramos las credeniciales, como password "password"
                     .defaultSuccessUrl("/inicio") //Si el login es correcto, se dirige a url /inicio
                     .permitAll()
                 .and().logout() //Esto es la salida de nuestro sistema
@@ -49,7 +49,7 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter{
                     .logoutSuccessUrl("/") //logoutSuccessUrl("/") con la / retorna al index, si la sesion se cerro correctamente
                     .permitAll()
                 .and().csrf()
-                .disable();*/ //Estas lineas son para que se deshabilite una caracteristicas de Spring Security
+                .disable(); //Estas lineas son para que se deshabilite una caracteristicas de Spring Security
 
     }
     
