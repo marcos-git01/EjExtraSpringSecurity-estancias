@@ -29,11 +29,11 @@
     font-size: 40px;
     margin-top: 80px;
     font-weight: 500;
-    color: lightcyan;
+    color: lightslategrey;
 }
 
 .header{
-    background-image: url(../img/FondoViaje1.jpg);
+    background-image: url(../img/FondoViaje2.jpg);
     background-size: cover;
     height: 750px;    
     display: flex;

@@ -12,10 +12,11 @@
                 <div class="tituloBiblioteca">
                     <a class="navbar-brand" >ESTANCIA EGG</a>
                 </div>
-                <!--
+                
                 <div class="container contenedorLibros">
-                    <p class="tituloLibros" th:if="${session.usuariosession != null}" th:text=" 'Hola de vuelta '+ ${session.usuariosession.nombre} "></p>
+                    <p class="tituloLibros" th:if="${session.usuariosession != null}" th:text=" 'Hola '+ ${session.usuariosession.alias} "></p>
                 </div>
+                <!--
                 <div class="container">
                     <a th:if="${session.usuariosession.imagen != null}" class="d-flex align-items-center">
                         <img class="logo"  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" >
