@@ -10,9 +10,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/")
@@ -80,6 +82,35 @@ public class PortalControlador {
         return "inicio.html";
     }
     
-    
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/perfil")
+    public String perfil(ModelMap modelo, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+        modelo.put("usuario", usuario); //Con esta linea autocompleto los datos del usuario que inicio session y accedo a usuario_modificar.html
+        return "usuario_modificar.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PostMapping("/perfil/{id}")
+    public String actualizar(@PathVariable String id, @RequestParam String alias, @RequestParam String email,
+            @RequestParam String clave, @RequestParam String clave2, ModelMap modelo) {
+
+        try {
+            usuarioServicio.actualizar(id, alias, email, clave, clave2);
+
+            modelo.put("exito", "Usuario actualizado correctamente!");
+
+            //return "inicio.html";
+            return "usuario_modificar.html";
+        } catch (MiException ex) {
+
+            modelo.put("error", ex.getMessage());
+            modelo.put("alias", alias);
+            modelo.put("email", email);
+
+            return "usuario_modificar.html";
+        }
+
+    }
     
 }

@@ -1,6 +1,7 @@
 package com.estancias.servicios;
 
 import com.estancias.entidades.Casa;
+import com.estancias.entidades.Imagen;
 import com.estancias.excepciones.MiException;
 import com.estancias.repositorios.CasaRepositorio;
 import java.util.ArrayList;
@@ -10,15 +11,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CasaServicio {
 
     @Autowired
     private CasaRepositorio casaRepositorio;
+    
+    @Autowired
+    private ImagenServicio imagenServicio;
 
     @Transactional
-    public void registrar(String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
+    public void registrar(MultipartFile archivo, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
 
         validar(calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda);
 
@@ -36,12 +41,16 @@ public class CasaServicio {
         casa.setMaxDias(maxDias);
         casa.setPrecio(precio);
         casa.setTipoVivienda(tipoVivienda);
+        
+        Imagen imagen = imagenServicio.guardar(archivo);
+
+        casa.setImagen(imagen);
 
         casaRepositorio.save(casa);
     }
 
     @Transactional
-    public void actualizar(String idCasa, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
+    public void actualizar(MultipartFile archivo, String idCasa, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
 
         validar(calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda);
 
@@ -63,11 +72,57 @@ public class CasaServicio {
             casa.setMaxDias(maxDias);
             casa.setPrecio(precio);
             casa.setTipoVivienda(tipoVivienda);
+            
+            String idImagen = null;
+
+            if (casa.getImagen() != null) {
+                idImagen = casa.getImagen().getId();
+            }
+
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+
+            casa.setImagen(imagen);
 
             casaRepositorio.save(casa);
 
         }
 
+    }
+    
+    @Transactional
+    public void modificar(MultipartFile archivo, String idCasa, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
+        Optional<Casa> respuesta = casaRepositorio.findById(idCasa);
+
+        if (respuesta.isPresent()) {
+
+            Casa casa = respuesta.get();
+
+            casa.setCalle(calle);
+            casa.setNumero(numero);
+            casa.setCodPostal(codPostal);
+            casa.setCiudad(ciudad);
+            casa.setPais(pais);
+
+            casa.setFechaDesde(casa.getFechaDesde());
+
+            casa.setMinDias(minDias);
+            casa.setMaxDias(maxDias);
+            casa.setPrecio(precio);
+            casa.setTipoVivienda(tipoVivienda);
+            
+            String idImagen = null;
+
+            if (casa.getImagen() != null) {
+                idImagen = casa.getImagen().getId();
+            }
+
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+
+            casa.setImagen(imagen);
+
+            casaRepositorio.save(casa);
+                       
+        }
     }
 
     @Transactional

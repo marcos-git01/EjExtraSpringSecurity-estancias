@@ -27,6 +27,7 @@
                         
                         <th scope="col">Precio</th>
                         <th scope="col">Tipo de vivienda</th>
+                        <th scope="col">Foto de Casa</th>
                         
                                                 
                         <th scope="col" sec:authorize="hasRole('ADMIN')" >Acciones</th>
@@ -35,6 +36,7 @@
                     </tr>
                 </thead>
                 <tbody th:each="casa : ${casas}"> 
+                    
                     <tr>
                         <th scope="row" th:text="${casa.id}"></th>
                         <td th:text="${casa.calle}"></td>                        
@@ -52,6 +54,10 @@
                         
                         <td th:text="${casa.precio}"></td>
                         <td th:text="${casa.tipoVivienda}"></td>
+                        
+                        <td 
+                            <a><img th:if="${casa.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${casa.id}__}" ></a>
+                        </td>
                         
                                                 
                         <td>

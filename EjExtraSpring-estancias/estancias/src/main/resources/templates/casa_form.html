@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <form class="formulario" action="/casa/registro" method="POST" >
+            <form class="formulario" action="/casa/registro" method="POST" enctype="multipart/form-data">
 
                 <div class="form-group my-3">
                     <h3>Cargar Casa</h3>
@@ -63,6 +63,10 @@
                 
                 <div class="form-group my-3">
                     <input type="text" class="form-control" name="tipoVivienda" placeholder="Tipo de vivienda">
+                </div>
+                
+                <div class="form-group my-3">
+                    <input type="file" class="form-control" name="archivo" >
                 </div>
                 
 

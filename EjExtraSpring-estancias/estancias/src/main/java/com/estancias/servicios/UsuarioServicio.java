@@ -106,6 +106,24 @@ public class UsuarioServicio implements UserDetailsService {
 
         return usuarios;
     }
+    
+    @Transactional
+    public void cambiarRol(String id) {
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+
+            if (usuario.getRol().equals(Rol.USER)) {
+
+                usuario.setRol(Rol.ADMIN);
+
+            } else if (usuario.getRol().equals(Rol.ADMIN)) {
+                usuario.setRol(Rol.USER);
+            }
+        }
+    }
 
     private void validar(String alias, String email, String clave, String clave2) throws MiException {
 

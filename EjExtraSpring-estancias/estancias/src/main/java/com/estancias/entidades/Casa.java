@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -34,6 +35,9 @@ public class Casa {
     private Double precio;
 
     private String tipoVivienda;
+
+    @OneToOne
+    private Imagen imagen;
 
     public Casa() {
     }
@@ -132,6 +136,14 @@ public class Casa {
 
     public void setTipoVivienda(String tipoVivienda) {
         this.tipoVivienda = tipoVivienda;
+    }
+
+    public Imagen getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Imagen imagen) {
+        this.imagen = imagen;
     }
 
 }

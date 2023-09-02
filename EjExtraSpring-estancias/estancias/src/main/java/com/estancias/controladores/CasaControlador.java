@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/casa") //localhost:8080/casa
@@ -34,11 +35,11 @@ public class CasaControlador {
             @RequestParam String ciudad, @RequestParam String pais,
             @RequestParam Integer minDias, @RequestParam Integer maxDias,
             @RequestParam Double precio, @RequestParam String tipoVivienda,
-            ModelMap modelo) {
+            ModelMap modelo, MultipartFile archivo) {
 
         try {
 
-            casaServicio.registrar(calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda); // si todo sale bien retornamos al index
+            casaServicio.registrar(archivo, calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda); // si todo sale bien retornamos al index
 
             modelo.put("exito", "La Casa fue cargada correctamente!");
 
@@ -73,11 +74,11 @@ public class CasaControlador {
     }
     
     @PostMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda, ModelMap modelo) {
+    public String modificar(MultipartFile archivo, @PathVariable String id, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda, ModelMap modelo) {
 
         try {
 
-            casaServicio.actualizar(id, calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda);
+            casaServicio.modificar(archivo, id, calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda);
 
             //Ver esta linea si funciona?
             modelo.put("exito", "La Casa fue modificada correctamente!");
