@@ -3,8 +3,10 @@ package com.estancias.controladores;
 import com.estancias.entidades.Casa;
 import com.estancias.excepciones.MiException;
 import com.estancias.servicios.CasaServicio;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,13 +35,17 @@ public class CasaControlador {
     public String registro(@RequestParam String calle,
             @RequestParam Integer numero, @RequestParam String codPostal,
             @RequestParam String ciudad, @RequestParam String pais,
+            @RequestParam("fechaDesde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDesde, 
+            
+            @RequestParam("fechaHasta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaHasta,
+            
             @RequestParam Integer minDias, @RequestParam Integer maxDias,
             @RequestParam Double precio, @RequestParam String tipoVivienda,
             ModelMap modelo, MultipartFile archivo) {
 
         try {
 
-            casaServicio.registrar(archivo, calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda); // si todo sale bien retornamos al index
+            casaServicio.registrar(archivo, calle, numero, codPostal, ciudad, pais, fechaDesde, fechaHasta, minDias, maxDias, precio, tipoVivienda); // si todo sale bien retornamos al index
 
             modelo.put("exito", "La Casa fue cargada correctamente!");
 
@@ -74,11 +80,11 @@ public class CasaControlador {
     }
     
     @PostMapping("/modificar/{id}")
-    public String modificar(MultipartFile archivo, @PathVariable String id, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda, ModelMap modelo) {
+    public String modificar(MultipartFile archivo, @PathVariable String id, String calle, Integer numero, String codPostal, String ciudad, String pais, @RequestParam("fechaDesde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDesde, @RequestParam("fechaHasta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaHasta, Integer minDias, Integer maxDias, Double precio, String tipoVivienda, ModelMap modelo) {
 
         try {
 
-            casaServicio.modificar(archivo, id, calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda);
+            casaServicio.modificar(archivo, id, calle, numero, codPostal, ciudad, pais, fechaDesde, fechaHasta, minDias, maxDias, precio, tipoVivienda);
 
             //Ver esta linea si funciona?
             modelo.put("exito", "La Casa fue modificada correctamente!");

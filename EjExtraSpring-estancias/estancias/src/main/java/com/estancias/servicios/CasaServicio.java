@@ -23,9 +23,9 @@ public class CasaServicio {
     private ImagenServicio imagenServicio;
 
     @Transactional
-    public void registrar(MultipartFile archivo, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
+    public void registrar(MultipartFile archivo, String calle, Integer numero, String codPostal, String ciudad, String pais, Date fechaDesde, Date fechaHasta, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
 
-        validar(calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda);
+        validar(calle, numero, codPostal, ciudad, pais, fechaDesde, fechaHasta, minDias, maxDias, precio, tipoVivienda);
 
         Casa casa = new Casa();
 
@@ -35,7 +35,8 @@ public class CasaServicio {
         casa.setCiudad(ciudad);
         casa.setPais(pais);
 
-        casa.setFechaDesde(new Date());
+        casa.setFechaDesde(fechaDesde);
+        casa.setFechaHasta(fechaHasta);
 
         casa.setMinDias(minDias);
         casa.setMaxDias(maxDias);
@@ -50,9 +51,9 @@ public class CasaServicio {
     }
 
     @Transactional
-    public void actualizar(MultipartFile archivo, String idCasa, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
+    public void actualizar(MultipartFile archivo, String idCasa, String calle, Integer numero, String codPostal, String ciudad, String pais, Date fechaDesde, Date fechaHasta, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
 
-        validar(calle, numero, codPostal, ciudad, pais, minDias, maxDias, precio, tipoVivienda);
+        validar(calle, numero, codPostal, ciudad, pais, fechaDesde, fechaHasta, minDias, maxDias, precio, tipoVivienda);
 
         Optional<Casa> respuesta = casaRepositorio.findById(idCasa);
 
@@ -65,8 +66,10 @@ public class CasaServicio {
             casa.setCodPostal(codPostal);
             casa.setCiudad(ciudad);
             casa.setPais(pais);
-
-            casa.setFechaDesde(casa.getFechaDesde());
+            
+            
+            casa.setFechaDesde(fechaDesde);
+            casa.setFechaHasta(fechaHasta);
 
             casa.setMinDias(minDias);
             casa.setMaxDias(maxDias);
@@ -90,7 +93,8 @@ public class CasaServicio {
     }
     
     @Transactional
-    public void modificar(MultipartFile archivo, String idCasa, String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
+    public void modificar(MultipartFile archivo, String idCasa, String calle, Integer numero, String codPostal, String ciudad, String pais, Date fechaDesde, Date fechaHasta, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
+        
         Optional<Casa> respuesta = casaRepositorio.findById(idCasa);
 
         if (respuesta.isPresent()) {
@@ -102,8 +106,9 @@ public class CasaServicio {
             casa.setCodPostal(codPostal);
             casa.setCiudad(ciudad);
             casa.setPais(pais);
-
-            casa.setFechaDesde(casa.getFechaDesde());
+                        
+            casa.setFechaDesde(fechaDesde);
+            casa.setFechaHasta(fechaHasta);
 
             casa.setMinDias(minDias);
             casa.setMaxDias(maxDias);
@@ -153,7 +158,7 @@ public class CasaServicio {
         return casas;
     }
 
-    private void validar(String calle, Integer numero, String codPostal, String ciudad, String pais, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
+    private void validar(String calle, Integer numero, String codPostal, String ciudad, String pais, Date fechaDesde, Date fechaHasta, Integer minDias, Integer maxDias, Double precio, String tipoVivienda) throws MiException {
 
         if (calle.isEmpty() || calle == null) {
             throw new MiException("La calle no puede ser nulo o estar vacío");
@@ -173,6 +178,14 @@ public class CasaServicio {
 
         if (pais.isEmpty() || pais == null) {
             throw new MiException("El pais no puede ser nulo o estar vacío");
+        }
+        
+        if (fechaDesde == null) {
+            throw new MiException("La fecha desde no puede ser nula");
+        }
+        
+        if (fechaHasta == null) {
+            throw new MiException("La fecha hasta no puede ser nula");
         }
 
         if (minDias < 0 || minDias == null) {
