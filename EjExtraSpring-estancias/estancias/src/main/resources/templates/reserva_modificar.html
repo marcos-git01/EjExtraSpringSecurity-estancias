@@ -18,6 +18,16 @@
 
                     <input th:value="${reserva.huesped}" type="text" class="form-control" name="huesped" placeholder="Huesped">
                 </div>
+                
+                <div class="form-group my-3">
+                    <label for="date">Fecha Desde</label>
+                    <input th:value="${reserva.fechaDesde}" type="date" class="form-control" name="fechaDesde" placeholder="Fecha Desde">
+                </div>
+                
+                <div class="form-group my-3">
+                    <label for="date">Fecha Hasta</label>
+                    <input th:value="${reserva.fechaHasta}" type="date" class="form-control" name="fechaHasta" placeholder="Fecha Hasta">
+                </div>
              
                 <div class="form-group my-3">
 

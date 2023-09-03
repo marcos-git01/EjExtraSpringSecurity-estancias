@@ -19,7 +19,7 @@
                         <th scope="col">Casa</th>
                         <th scope="col">Cliente</th>
                                               
-                        <th scope="col" sec:authorize="hasRole('ADMIN')" >Acciones</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN') or hasRole('USER')" >Acciones</th>
                         <th scope="col" sec:authorize="hasRole('ADMIN')" >Acciones</th>
 
                     </tr>
@@ -35,7 +35,7 @@
                         <td th:text="${reserva.cliente.nombre}"></td>
                                                
                         <td>
-                            <a sec:authorize="hasRole('ADMIN')" th:href= "@{/reserva/modificar/__${reserva.id}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
+                            <a sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href= "@{/reserva/modificar/__${reserva.id}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
                         </td>                       
                         <td>
                             <a sec:authorize="hasRole('ADMIN')" th:href= "@{/reserva/eliminar/__${reserva.id}__}"><i class="fas fa-feather-alt"></i> Eliminar </a>

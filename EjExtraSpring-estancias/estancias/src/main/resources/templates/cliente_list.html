@@ -23,7 +23,7 @@
                         <th scope="col">Usuario</th>
                         
                                                 
-                        <th scope="col" sec:authorize="hasRole('ADMIN')" >Acciones</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN') or hasRole('USER')" >Acciones</th>
                         <th scope="col" sec:authorize="hasRole('ADMIN')" >Acciones</th>
 
                     </tr>
@@ -42,7 +42,7 @@
                         
                                                 
                         <td>
-                            <a sec:authorize="hasRole('ADMIN')" th:href= "@{/cliente/modificar/__${cliente.id}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
+                            <a sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href= "@{/cliente/modificar/__${cliente.id}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
                         </td>                       
                         <td>
                             <a sec:authorize="hasRole('ADMIN')" th:href= "@{/cliente/eliminar/__${cliente.id}__}"><i class="fas fa-feather-alt"></i> Eliminar </a>

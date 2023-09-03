@@ -45,7 +45,7 @@
                              
                 <div class="form-group my-3">
 
-                    <select name="idUsuario">
+                    <select sec:authorize="hasRole('ADMIN')" name="idUsuario">
 
                         <option>Seleccionar Usuario</option>
 
@@ -54,6 +54,16 @@
                                 th:text="${usuario.alias}"
                                 />
                     </select>
+                    
+                    <select sec:authorize="hasRole('USER')" name="idUsuario">
+
+                        <option>Seleccionar Usuario</option>
+
+                        <option th:value="${session.usuariosession.id}"
+                                th:text="${session.usuariosession.alias}"
+                                />
+                    </select>
+                    
                 </div>
                                
                 <button type="submit" class="btn btn-primary mt-3 botones">Actualizar</button>

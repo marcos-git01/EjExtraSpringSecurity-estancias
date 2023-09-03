@@ -37,7 +37,7 @@
                                              
                 <div class="form-group my-3">
 
-                    <select name="idUsuario">
+                    <select sec:authorize="hasRole('ADMIN')" name="idUsuario">
 
                         <option>Seleccionar Usuario</option>
 
@@ -46,13 +46,23 @@
                                 th:text="${usuario.alias}"
                                 />
                     </select>
+                    
+                    <select sec:authorize="hasRole('USER')" name="idUsuario">
+
+                        <option>Seleccionar Usuario</option>
+
+                        <option th:value="${session.usuariosession.id}"
+                                th:text="${session.usuariosession.alias}"
+                                />
+                    </select>
+                    
                 </div>
                 
                 <div class="form-group my-3">
 
                     <select name="idCasa">
 
-                        <option>Seleccionar Usuario</option>
+                        <option>Seleccionar Casa</option>
 
                         <option th:each="casa : ${casas}"
                                 th:value="${casa.id}"
