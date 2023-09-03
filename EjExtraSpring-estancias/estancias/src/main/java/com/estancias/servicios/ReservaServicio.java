@@ -28,9 +28,9 @@ public class ReservaServicio {
     private ClienteRepositorio clienteRepositorio;
 
     @Transactional
-    public void registrar(String huesped, String idCasa, String idCliente) throws MiException {
+    public void registrar(String huesped, Date fechaDesde, Date fechaHasta, String idCasa, String idCliente) throws MiException {
 
-        validar(huesped, idCasa, idCliente);
+        validar(huesped, fechaDesde, fechaHasta, idCasa, idCliente);
 
         Casa casa = casaRepositorio.findById(idCasa).get();
 
@@ -39,8 +39,9 @@ public class ReservaServicio {
         Reserva reserva = new Reserva();
 
         reserva.setHuesped(huesped);
-        
-        reserva.setFechaDesde(new Date());
+                       
+        reserva.setFechaDesde(fechaDesde);
+        reserva.setFechaHasta(fechaHasta);
 
         reserva.setCasa(casa);
 
@@ -50,9 +51,9 @@ public class ReservaServicio {
     }
 
     @Transactional
-    public void actualizar(String idReserva, String huesped, String idCasa, String idCliente) throws MiException {
+    public void actualizar(String idReserva, String huesped, Date fechaDesde, Date fechaHasta, String idCasa, String idCliente) throws MiException {
 
-        validar(huesped, idCasa, idCliente);
+        validar(huesped, fechaDesde, fechaHasta, idCasa, idCliente);
 
         Optional<Reserva> respuesta = reservaRepositorio.findById(idReserva);
 
@@ -61,6 +62,9 @@ public class ReservaServicio {
             Reserva reserva = respuesta.get();
 
             reserva.setHuesped(huesped);
+            
+            reserva.setFechaDesde(fechaDesde);
+            reserva.setFechaHasta(fechaHasta);
 
             if (idCasa != null) {
 
@@ -128,10 +132,18 @@ public class ReservaServicio {
         return reservas;
     }
 
-    private void validar(String huesped, String idCasa, String idCliente) throws MiException {
+    private void validar(String huesped, Date fechaDesde, Date fechaHasta, String idCasa, String idCliente) throws MiException {
 
         if (huesped.isEmpty() || huesped == null) {
             throw new MiException("El huesped no puede ser nulo o estar vacío");
+        }
+        
+        if (fechaDesde == null) {
+            throw new MiException("La fecha desde no puede ser nula");
+        }
+        
+        if (fechaHasta == null) {
+            throw new MiException("La fecha hasta no puede ser nula");
         }
 
         if (idCasa.isEmpty() || idCasa == null) {

@@ -15,7 +15,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/cliente/registrar}">Crear Cliente</a></li>
+                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href="@{/cliente/registrar}">Crear Cliente</a></li>
                     <li><hr class="dropdown-divider"></li>
 
                     <li><a class="dropdown-item" th:href="@{/cliente/lista}">Listar Clientes</a></li>
@@ -29,7 +29,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/familia/registrar}">Crear Familia</a></li>
+                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href="@{/familia/registrar}">Crear Familia</a></li>
                     <li><hr class="dropdown-divider"></li>
 
                     <li><a class="dropdown-item" th:href="@{/familia/lista}">Listar Familia</a></li>
@@ -42,7 +42,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/casa/registrar}">Crear Casa</a></li>
+                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href="@{/casa/registrar}">Crear Casa</a></li>
                     <li><hr class="dropdown-divider"></li>
 
                     <li><a class="dropdown-item" th:href="@{/casa/lista}">Listar Casas</a></li>
@@ -55,7 +55,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/comentario/registrar}">Crear Comentario</a></li>
+                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href="@{/comentario/registrar}">Crear Comentario</a></li>
                     <li><hr class="dropdown-divider"></li>
 
                     <li><a class="dropdown-item" th:href="@{/comentario/lista}">Listar Comentarios</a></li>
@@ -68,7 +68,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/reserva/registrar}">Crear Reserva</a></li>
+                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href="@{/reserva/registrar}">Crear Reserva</a></li>
                     <li><hr class="dropdown-divider"></li>
 
                     <li><a class="dropdown-item" th:href="@{/reserva/lista}">Listar Reserva</a></li>
@@ -76,7 +76,7 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMIN')" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Usuarios
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -92,7 +92,7 @@
                 </a>
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{/perfil}" >Editar Perfil</a></li>
+                    <li><a class="dropdown-item" sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href="@{/perfil}" >Editar Perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
 
                     <li><a class="dropdown-item" href="/logout" >Cerrar Sesión</a></li>

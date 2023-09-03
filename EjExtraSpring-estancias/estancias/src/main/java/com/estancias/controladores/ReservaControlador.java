@@ -8,8 +8,10 @@ import com.estancias.excepciones.MiException;
 import com.estancias.servicios.CasaServicio;
 import com.estancias.servicios.ClienteServicio;
 import com.estancias.servicios.ReservaServicio;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,12 +51,17 @@ public class ReservaControlador {
 
     @PostMapping("/registro")
     public String registro(@RequestParam String huesped,
+            
+            @RequestParam("fechaDesde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDesde, 
+            
+            @RequestParam("fechaHasta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaHasta,
+            
             @RequestParam String idCasa, @RequestParam String idCliente,
             ModelMap modelo) {
 
         try {
 
-            reservaServicio.registrar(huesped, idCasa, idCliente); // si todo sale bien retornamos al index
+            reservaServicio.registrar(huesped, fechaDesde, fechaHasta, idCasa, idCliente); // si todo sale bien retornamos al index
 
             modelo.put("exito", "La Reserva fue cargada correctamente!");
 
@@ -106,11 +113,17 @@ public class ReservaControlador {
     }
     
     @PostMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id, String huesped, String idCasa, String idCliente, ModelMap modelo) {
+    public String modificar(@PathVariable String id, String huesped,
+            
+            @RequestParam("fechaDesde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDesde, 
+            
+            @RequestParam("fechaHasta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaHasta,
+            
+            String idCasa, String idCliente, ModelMap modelo) {
 
         try {
 
-            reservaServicio.actualizar(id, huesped, idCasa, idCliente);
+            reservaServicio.actualizar(id, huesped, fechaDesde, fechaHasta, idCasa, idCliente);
 
             //Ver esta linea si funciona?
             modelo.put("exito", "La Reserva fue modificada correctamente!");
