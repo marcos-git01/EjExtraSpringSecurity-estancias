@@ -30,7 +30,7 @@
                         <th scope="col">Foto de Casa</th>
                         
                                                 
-                        <th scope="col" sec:authorize="hasRole('ADMIN')" >Acciones</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN') or hasRole('USER')" >Acciones</th>
                         <th scope="col" sec:authorize="hasRole('ADMIN')" >Acciones</th>
 
                     </tr>
@@ -61,7 +61,7 @@
                         
                                                 
                         <td>
-                            <a sec:authorize="hasRole('ADMIN')" th:href= "@{/casa/modificar/__${casa.id}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
+                            <a sec:authorize="hasRole('ADMIN') or hasRole('USER')" th:href= "@{/casa/modificar/__${casa.id}__}"><i class="fas fa-feather-alt"></i> Modificar </a>
                         </td>
                         
                         <td>
